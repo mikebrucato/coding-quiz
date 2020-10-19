@@ -27,7 +27,7 @@ var quizQuestions = [
     },
     correctAnswer: "a"
 },
-{   question: "What function is used to return an integer?",
+{   question: "What method is used to return an integer?",
     answers: {
         a: "math.random()",
         b: "math.floor()",
