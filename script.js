@@ -110,6 +110,21 @@ startButton.addEventListener("click", function() {
     
         }
     }
+ 
+// Determines what questions the user is on
+    quizQuestionsIndex++;
+    
+    if (quizQuestionsIndex >= quizQuestions.length) {
 
+        // Finished will append the user's score to the last page
+        finished();
+        createDiv.textContent = "You got  " + score + "/" + quizQuestions.length + " Correct!";
+    } else {
+        render(quizQuestionsIndex);
+    }
+    questions.appendChild(createDiv);
+
+
+    
     
 
