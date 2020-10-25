@@ -116,14 +116,41 @@ startButton.addEventListener("click", function() {
     
     if (quizQuestionsIndex >= quizQuestions.length) {
 
-        // Finished will append the user's score to the last page
+// Finished will append the user's score to the last page
         finished();
-        createDiv.textContent = "You got  " + score + "/" + quizQuestions.length + " Correct!";
+        createDiv.textContent = "You got  " + score + "-" + quizQuestions.length + " Correct!";
     } else {
         render(quizQuestionsIndex);
     }
     questions.appendChild(createDiv);
 
+    function finished() {
+        questions.innerHTML = "";
+        timer.innerHTML = "";
+    
+// create new heading
+        var createH1 = document.createElement("h1");
+        createH1.setAttribute("id", "createH1");
+        createH1.textContent = "Finished!"
+    
+        questions.appendChild(createH1);
+    
+// create new paragraph
+        var createP = document.createElement("p");
+        createP.setAttribute("id", "createP");
+    
+        questions.appendChild(createP);
+    
+// takes remaining time and replaces it with score
+        if (secondsLeft >= 0) {
+            var timeRemaining = secondsLeft;
+            var createP = document.createElement("p");
+            clearInterval(timerInterval);
+            createP.textContent = "Your final score is: " + timeRemaining;
+    
+            questions.appendChild(createP);
+        }
+    }    
 
     
     
