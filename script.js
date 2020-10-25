@@ -88,6 +88,27 @@ startButton.addEventListener("click", function() {
                 createUl.append(listItem)
                 listItem.addEventListener("click", (compare))
             })
+// compare the user answer with the correct answer to output a "correct" or "wrong" messege at the bottom of the page            
+    }
+    function compare(event) {
+        var element = event.target;
+    
+        if (element.matches("li")) {
+    
+            var createDiv = document.createElement("div");
+            createDiv.setAttribute("id", "createDiv");
+           
+            if (element.textContent == quizQuestions[quizQuestionsIndex].correctAnswer) {
+                score++;
+                createDiv.textContent = "Correct!"
+            
+            } else {
+// deducts 10 seconds for wrong answer
+                secondsLeft = secondsLeft - deductTime;
+                createDiv.textContent = "Wrong!"
+            }
+    
+        }
     }
 
     
