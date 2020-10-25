@@ -13,86 +13,81 @@
 
 // timer, start, questions, and answer variables
 
-var container = document.querySelector(".conatiner")
-var timer = document.querySelector(".timer")
-var questions = document.querySelector(".questions")
-var answers = document.querySelector(".answersList")
-var startButton = document.querySelector(".startButton")
-
 // question and answers variable array
 var quizQuestions = [
-{
-    question: "What are variables in Javascript used for?",
-    answers: {
-        a: "to store data",
-        b: "math functions",
-        c: "to loop",
+    {
+        question: "What are variables in Javascript used for?",
+        answers: {
+            a: "to store data",
+            b: "math functions",
+            c: "to loop",
+        },
+        correctAnswer: "a"
     },
-    correctAnswer: "a"
-},
-{   question: "What method is used to return an integer?",
-    answers: {
-        a: "math.random()",
-        b: "math.floor()",
-        c: "upperCase()",
+    {   question: "What method is used to return an integer?",
+        answers: {
+            a: "math.random()",
+            b: "math.floor()",
+            c: "upperCase()",
+        },
+        correctAnswer: "b"
     },
-    correctAnswer: "b"
-},
-{   question: "What are prompts used for?",
-    answers: {
-        a: "to get an input from a user",
-        b: "to alert the user",
-        c: "to provide a messege in the console",
+    {   question: "What are prompts used for?",
+        answers: {
+            a: "to get an input from a user",
+            b: "to alert the user",
+            c: "to provide a messege in the console",
+        },
+        correctAnswer: "a"
     },
-    correctAnswer: "a"
-},
-{   question: "What are booleans in Javascript?",
-    answers: {
-        a: "any number that's a non-integer",
-        b: "a type of math function",
-        c: "a true or false statement",
+    {   question: "What are booleans in Javascript?",
+        answers: {
+            a: "any number that's a non-integer",
+            b: "a type of math function",
+            c: "a true or false statement",
+        },
+        correctAnswer: "c"
     },
-    correctAnswer: "c"
-},
-{   question: "which method returns the length of a string?",
-    answers: {
-        a: "size()",
-        b: "length()",
-        c: "index()",
-    },
-    correctAnswer: "b"
-}
-]
+    {   question: "which method returns the length of a string?",
+        answers: {
+            a: "size()",
+            b: "length()",
+            c: "index()",
+        },
+        correctAnswer: "b"
+    }
+    ]
 
-// scoring variables
-var questions = 0
-var score = 0
+    var container = document.querySelector(".container")
+    var timer = document.querySelector(".time")
+    var questionsList = document.querySelector(".questions")
+    var startButton = document.querySelector(".startButton")
+    var answersList = document.querySelector(".answersList")
+    var createUl = document.createElement("ul")
+    var timerInterval = 0
+    var secondsLeft = 45
+    var questionsIndex = 0
+    var score = 0
 
-// timer variables
-var holdInterval = 0
-var secondsLeft = 60
-var QuestionsList = document.createElement("ul")
+//timer
 
-// event listener function for start button
+// event listener that starts the quiz and timer when click
 startButton.addEventListener("click", function() {
+    if (timerInterval === 0) {
+        timerInterval = setInterval(function() {
+            secondsLeft--;
+            timer.textContent = "Time: " + secondsLeft
 
-// start button timer function    
-    if(holdInterval === 0) {
-        holdInterval = setInterval(function() {
-        secondsLeft--;
-        timer.textContent = "Time:" + secondsLeft;
-        
-        if(secondsLeft <= 0) {
-            clearInterval(holdInterval)
-            allDone();
-            timer.textContent = "Time's up!"
-        }
-    }, 1000);
+            if (secondsLeft <= 0) {
+                clearInterval(timerInterval)
+                allDone()
+                timer.textContent = "Time's Up!"
+            }
+        }, 1000)
+    }
+})
 
-}
 
-render(questions);
 
-});
 
-  
+
