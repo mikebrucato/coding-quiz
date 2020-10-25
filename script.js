@@ -17,57 +17,40 @@
 var quizQuestions = [
     {
         question: "What are variables in Javascript used for?",
-        answers: {
-            a: "to store data",
-            b: "math functions",
-            c: "to loop",
-        },
-        correctAnswer: "a"
+        answers: ["to store data", "math functions", "to loop"],
+        correctAnswer: "to store data"  
+              
     },
     {   question: "What method is used to return an integer?",
-        answers: {
-            a: "math.random()",
-            b: "math.floor()",
-            c: "upperCase()",
-        },
-        correctAnswer: "b"
+        answers: ["math.random()", "math.floor()", "upperCase()"],
+        correctAnswer: "math.floor()"
+      
     },
     {   question: "What are prompts used for?",
-        answers: {
-            a: "to get an input from a user",
-            b: "to alert the user",
-            c: "to provide a messege in the console",
-        },
-        correctAnswer: "a"
+        answers: ["to get an input from a user", "to alert the user", "to provide a messege in the console"],
+        correctAnswer: "to get an input from a user"
     },
     {   question: "What are booleans in Javascript?",
-        answers: {
-            a: "any number that's a non-integer",
-            b: "a type of math function",
-            c: "a true or false statement",
-        },
-        correctAnswer: "c"
+        answers: ["any number that's a non-integer", "a type of math function", "a true or false statement"],
+        correctAnswer: "a true or false statement"
     },
     {   question: "which method returns the length of a string?",
-        answers: {
-            a: "size()",
-            b: "length()",
-            c: "index()",
-        },
-        correctAnswer: "b"
+        answers: ["size()", "length()", "index()"],
+        correctAnswer: "index()"
     }
     ]
 
     var container = document.querySelector(".container")
     var timer = document.querySelector(".time")
-    var questionsList = document.querySelector(".questions")
+    var questions = document.querySelector(".questions")
     var startButton = document.querySelector(".startButton")
     var answersList = document.querySelector(".answersList")
     var createUl = document.createElement("ul")
     var timerInterval = 0
     var secondsLeft = 45
-    var questionsIndex = 0
+    var quizQuestionsIndex = 0
     var score = 0
+    var deductTime = 10
 
 //timer
 
@@ -80,14 +63,32 @@ startButton.addEventListener("click", function() {
 
             if (secondsLeft <= 0) {
                 clearInterval(timerInterval)
-                allDone()
+                finished()
                 timer.textContent = "Time's Up!"
             }
         }, 1000)
     }
+    render(quizQuestionsIndex);
 })
+// renders new question to the page
+    function render(quizQuestionsIndex) {
+        questions.innerHTML = ""
+        createUl.innerHTML = ""
+// for loop that iterates through the questions and answers array
+        for (var i = 0; i < quizQuestions.length; i++) {
+            var userQuestions = quizQuestions[quizQuestionsIndex].question
+            var userAnswers = quizQuestions[quizQuestionsIndex].answers
+            questions.textContent = userQuestions
+        }
+// renders new answers list to the page
+            userAnswers.forEach(function (newQuestion) {
+                var listItem = document.createElement("li")
+                listItem.textContent = newQuestion
+                questions.append(createUl)
+                createUl.append(listItem)
+                listItem.addEventListener("click", (compare))
+            })
+    }
 
-
-
-
+    
 
