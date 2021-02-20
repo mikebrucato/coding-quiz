@@ -153,6 +153,7 @@ function compare(event) {
             createP.textContent = "Your final score is: " + timeRemaining;
 
             questions.appendChild(createP);
+            
         }
     }
 }
