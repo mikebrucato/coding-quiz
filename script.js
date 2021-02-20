@@ -18,46 +18,50 @@ var quizQuestions = [
     {
         question: "What are variables in Javascript used for?",
         answers: ["to store data", "math functions", "to loop"],
-        correctAnswer: "to store data"  
-              
+        correctAnswer: "to store data"
+
     },
-    {   question: "What method is used to return an integer?",
+    {
+        question: "What method is used to return an integer?",
         answers: ["math.random()", "math.floor()", "upperCase()"],
         correctAnswer: "math.floor()"
-      
+
     },
-    {   question: "What are prompts used for?",
+    {
+        question: "What are prompts used for?",
         answers: ["to get an input from a user", "to alert the user", "to provide a messege in the console"],
         correctAnswer: "to get an input from a user"
     },
-    {   question: "What are booleans in Javascript?",
+    {
+        question: "What are booleans in Javascript?",
         answers: ["any number that's a non-integer", "a type of math function", "a true or false statement"],
         correctAnswer: "a true or false statement"
     },
-    {   question: "which method returns the length of a string?",
+    {
+        question: "which method returns the length of a string?",
         answers: ["size()", "length()", "index()"],
         correctAnswer: "index()"
     }
-    ]
+]
 
-    var container = document.querySelector(".container")
-    var timer = document.querySelector(".time")
-    var questions = document.querySelector(".questions")
-    var startButton = document.querySelector(".startButton")
-    var answersList = document.querySelector(".answersList")
-    var createUl = document.createElement("ul")
-    var timerInterval = 0
-    var secondsLeft = 45
-    var quizQuestionsIndex = 0
-    var score = 0
-    var deductTime = 10
+var container = document.querySelector(".container")
+var timer = document.querySelector(".time")
+var questions = document.querySelector(".questions")
+var startButton = document.querySelector(".startButton")
+var answersList = document.querySelector(".answersList")
+var createUl = document.createElement("ul")
+var timerInterval = 0
+var secondsLeft = 45
+var quizQuestionsIndex = 0
+var score = 0
+var deductTime = 10
 
 //timer
 
 // event listener that starts the quiz and timer when click
-startButton.addEventListener("click", function() {
+startButton.addEventListener("click", function () {
     if (timerInterval === 0) {
-        timerInterval = setInterval(function() {
+        timerInterval = setInterval(function () {
             secondsLeft--;
             timer.textContent = "Time: " + secondsLeft
 
@@ -71,69 +75,84 @@ startButton.addEventListener("click", function() {
     render(quizQuestionsIndex);
 })
 // renders new question to the page
-    function render(quizQuestionsIndex) {
-        questions.innerHTML = ""
-        createUl.innerHTML = ""
-// for loop that iterates through the questions and answers array
-        for (var i = 0; i < quizQuestions.length; i++) {
-            var userQuestions = quizQuestions[quizQuestionsIndex].question
-            var userAnswers = quizQuestions[quizQuestionsIndex].answers
-            questions.textContent = userQuestions
-        }
-// renders new answers list to the page
-            userAnswers.forEach(function (newQuestion) {
-                var listItem = document.createElement("li")
-                listItem.textContent = newQuestion
-                questions.append(createUl)
-                createUl.append(listItem)
-                listItem.addEventListener("click", (compare))
-            })
-// compare the user answer with the correct answer to output a "correct" or "wrong" messege at the bottom of the page            
+function render(quizQuestionsIndex) {
+    questions.innerHTML = ""
+    createUl.innerHTML = ""
+    // for loop that iterates through the questions and answers array
+    for (var i = 0; i < quizQuestions.length; i++) {
+        var userQuestions = quizQuestions[quizQuestionsIndex].question
+        var userAnswers = quizQuestions[quizQuestionsIndex].answers
+        questions.textContent = userQuestions
     }
-    function compare(event) {
-        var element = event.target;
-    
-        if (element.matches("li")) {
-    
-            var createDiv = document.createElement("div");
-            createDiv.setAttribute("id", "createDiv");
-           
-            if (element.textContent == quizQuestions[quizQuestionsIndex].correctAnswer) {
-                score++;
-                createDiv.textContent = "Correct!"
-            
-            } else {
-// deducts 10 seconds for wrong answer
-                secondsLeft = secondsLeft - deductTime;
-                createDiv.textContent = "Wrong!"
-            }
-    
+    // renders new answers list to the page
+    userAnswers.forEach(function (newQuestion) {
+        var listItem = document.createElement("li")
+        listItem.textContent = newQuestion
+        questions.appendChild(createUl)
+        createUl.appendChild(listItem)
+        listItem.addEventListener("click", (compare))
+        console.log(newQuestion)
+    })
+
+}
+// compare the user answer with the correct answer to output a "correct" or "wrong" messege at the bottom of the list          
+function compare(event) {
+    var element = event.target;
+
+    if (element.matches("li")) {
+
+        var createDiv = document.createElement("div");
+        createDiv.setAttribute("id", "createDiv");
+
+        if (element.textContent == quizQuestions[quizQuestionsIndex].correctAnswer) {
+            score++;
+            createDiv.textContent = "Correct!"
+
+        } else {
+            // deducts 10 seconds for wrong answer
+            secondsLeft = secondsLeft - deductTime;
+            createDiv.textContent = "Wrong!"
         }
     }
+
+
+
+    quizQuestionsIndex++
+
+    if (quizQuestionsIndex >= questions.length) {
+
+        finished()
+        createDiv.textcontent = "You are done!" + "You got " + score + "-" + questions.length + "Correct!"
+    } else {
+        render(quizQuestionsIndex)
+    }
+    questions.appendChild(createDiv)
+
     function finished() {
         questions.innerHTML = "";
         timer.innerHTML = "";
-    
-// create new heading
+
+        // create new heading
         var createH1 = document.createElement("h1");
         createH1.setAttribute("id", "createH1");
         createH1.textContent = "Finished!"
-    
+
         questions.appendChild(createH1);
-    
-// create new paragraph
+
+        // create new paragraph
         var createP = document.createElement("p");
         createP.setAttribute("id", "createP");
-    
+
         questions.appendChild(createP);
-    
-// takes remaining time and replaces it with score
+
+        // takes remaining time and replaces it with score
         if (secondsLeft >= 0) {
             var timeRemaining = secondsLeft;
             var createP = document.createElement("p");
             clearInterval(timerInterval);
             createP.textContent = "Your final score is: " + timeRemaining;
-    
+
             questions.appendChild(createP);
         }
-    }    
+    }
+}
